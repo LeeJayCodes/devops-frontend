@@ -1,23 +1,19 @@
 pipeline {
-    agent {
-        label 'linux'
 
-        environment {
+    agent any
+    
+    environment {
         containerRegistryCredentials = credentials('ARTIFACTORY_PUBLISH')
-        containerRegistryURL = 'jaewoo.jfrog.io'
+        containerRegistryURL = 'jato.jfrog.io'
         imageName = 'devops-test'
-        ARTIFACTORY_URL = 'jaewoo.jfrog.io'
+        ARTIFACTORY_URL = 'jato.jfrog.io'
         ARTIFACTORY_REPO = 'docker'
         FRONTEND_IMAGE_NAME = 'cert-fe'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         version = "1.0.${env.BUILD_ID}"
         FRONTEND_VERSION = "${env.version}"
-        }
-
-        tools {
-            nodejs ''//specify version here
-        }
     }
+
 
     // environment{
     //     containerRegistryCredentials = credential('ARTIFACTORY_PUBLISH')
@@ -26,22 +22,6 @@ pipeline {
     // }
 
     stages {
-        stage('Environment Setup') {
-            steps {
-
-                cleanWs()
-
-                checkout scm
-
-                // script {
-                //         version = "1.0.${env.BUILD_ID}"
-                //         artifactoryServer = Artifactory.server 'default'
-                //         artifactoryDocker = artifactoryDocker = server: artifactoryServer
-                //         buildInfo = artifactory.newBuildInfo()
-                // }
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
 
@@ -54,18 +34,15 @@ pipeline {
             }
         }
 
-               stage("Deploy to Dev") {
-           steps {
-               script {
+        stage("Deploy to Dev") {
+            steps {
+                script {
                    def currentBranch = env.BRANCH_NAME
                    echo "Current Branch: ${currentBranch}"
-
-
                        sh "docker-compose -f ${DOCKER_COMPOSE_FILE} down"
                        sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
-               }
-           }
-       }
-
+                }
+            }
+        }
     }
 }

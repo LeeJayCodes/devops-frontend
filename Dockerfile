@@ -2,7 +2,7 @@
 FROM nginx:alpine
 
 ARG FRONTEND_VERSION
-ENV FRONTEND_VERSION = ${FRONTED_VERSION}
+ENV FRONTEND_VERSION = ${FRONTEND_VERSION}
 
 # Set the working directory inside the container to /app
 WORKDIR /app
