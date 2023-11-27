@@ -4,11 +4,11 @@ pipeline {
     
     environment {
         containerRegistryCredentials = credentials('ARTIFACTORY_PUBLISH')
-        containerRegistryURL = 'jato.jfrog.io'
+        containerRegistryURL = 'jaewoo.jfrog.io'
         imageName = 'devops-test'
-        ARTIFACTORY_URL = 'jato.jfrog.io'
+        ARTIFACTORY_URL = 'jaewoo.jfrog.io'
         ARTIFACTORY_REPO = 'docker'
-        FRONTEND_IMAGE_NAME = 'cert-fe'
+        FRONTEND_IMAGE_NAME = 'front-end-app'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         version = "1.0.${env.BUILD_ID}"
         FRONTEND_VERSION = "${env.version}"
