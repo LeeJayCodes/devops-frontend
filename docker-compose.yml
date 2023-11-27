@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "8090:8080"
+      - "8080:8080"
     environment:
       - FRONTEND_VERSION=${FRONTEND_VERSION:-latest}  # Use the default value 'latest' if not provided
 
