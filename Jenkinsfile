@@ -39,8 +39,8 @@ pipeline {
                 script {
                    def currentBranch = env.BRANCH_NAME
                    echo "Current Branch: ${currentBranch}"
-                       sh "docker-compose -f ${DOCKER_COMPOSE_FILE} down"
-                       sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                       bat "docker-compose -f ${DOCKER_COMPOSE_FILE} down"
+                       bat "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
                 }
             }
         }
