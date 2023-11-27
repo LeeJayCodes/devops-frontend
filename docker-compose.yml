@@ -3,15 +3,15 @@ version: "3.9"
 services:
   front-end-app:
     container_name: front-end-app
-    image: front-end-app:${FRONTEND_VERSION:-latest}
+    image: frontend-app
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
     ports:
       - "8080:8080"
-    environment:
-      - FRONTEND_VERSION=${FRONTEND_VERSION:-latest}  # Use the default value 'latest' if not provided
+    # environment:
+    #   - FRONTEND_APP_VERSION=${FRONTEND_APP_VERSION:-latest}  # Use the default value 'latest' if not provided :${FRONTEND_APP_VERSION:-latest}
 
 
   # selenium-tests:
