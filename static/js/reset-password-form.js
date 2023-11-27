@@ -1,23 +1,14 @@
-import {
-  togglePasswordView,
-  authenticationSubmit,
-  displayServerErrorMessages,
-  displaySuccessMessages,
-  clearForm,
-} from './module.js';
+import { togglePasswordView, authenticationSubmit, displayServerErrorMessages, displaySuccessMessages, clearForm, backendDomain } from "./module.js";
+
 
 // Adding functioanlity to show password feature
-const passwordIcon = document.querySelector('#show-newPassword');
-passwordIcon.addEventListener('click', () => {
-  togglePasswordView('newPassword', passwordIcon, 'show-newPassword-text');
+const passwordIcon = document.querySelector("#show-newPassword");
+passwordIcon.addEventListener("click", () => {
+    togglePasswordView("newPassword", passwordIcon, "show-newPassword-text");
 });
-const passwordConfirmIcon = document.querySelector('#show-password-confirm');
-passwordConfirmIcon.addEventListener('click', () => {
-  togglePasswordView(
-    'password-confirm',
-    passwordConfirmIcon,
-    'show-password-confirm-text'
-  );
+const passwordConfirmIcon = document.querySelector("#show-password-confirm");
+passwordConfirmIcon.addEventListener("click", () => {
+    togglePasswordView("password-confirm", passwordConfirmIcon, "show-password-confirm-text");
 });
 
 const resetPasswordForm = document.querySelector('#reset-password-form');
@@ -38,34 +29,37 @@ const code = urlParams.get('code');
 
 // Calling backend API for registration
 async function fetchResetPassword(passwordInfo) {
+  
   // code is retrieved from this JavaScript page not module.js
-  let apiUrl = `http://localhost:8080/api/auth/password-reset?token=${code}`;
+  let apiUrl = `${backendDomain}/api/auth/password-reset?token=${code}`;
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',
       credentials: 'include',
       mode: 'cors',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': "application/json"
       },
-      body: JSON.stringify({ newPassword: passwordInfo.newPassword }),
+      body: JSON.stringify({ newPassword: passwordInfo.newPassword })
     });
     const data = await response.json();
-    if (!response.ok) {
-      resetPasswordForm.classList.add('hidden');
+    if(!response.ok){
+      resetPasswordForm.classList.add("hidden");
       displayServerErrorMessages('password-reset-error', data.message);
-      errorPasswordReset.classList.remove('hidden');
-    } else {
-      resetPasswordForm.classList.add('hidden');
-      displaySuccessMessages(
-        'password-reset-success',
-        'Your password has successfully changed'
-      );
-      successPasswordReset.classList.remove('hidden');
-      document.querySelector('#newPassword').value = '';
-      document.querySelector('#password-confirm').value = '';
+      errorPasswordReset.classList.remove("hidden");
+      
+    } else{
+      resetPasswordForm.classList.add("hidden");
+      displaySuccessMessages('password-reset-success', "Your password has successfully changed");
+      successPasswordReset.classList.remove("hidden");
+      document.querySelector("#newPassword").value = ""
+      document.querySelector("#password-confirm").value = ""
     }
+
   } catch (error) {
-    console.error('Error fetching JSON data (reset password):', error);
+    console.error("Error fetching JSON data (reset password):", error);
   }
 }
+
+
+  

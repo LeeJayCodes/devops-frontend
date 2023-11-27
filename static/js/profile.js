@@ -1,13 +1,4 @@
-import {
-  userBtn,
-  togglePasswordView,
-  authenticationSubmit,
-  displayServerErrorMessages,
-  displaySuccessMessages,
-  signOut,
-  refreshToken,
-  clearForm,
-} from './module.js';
+import { userBtn, togglePasswordView, authenticationSubmit, displayServerErrorMessages, displaySuccessMessages, signOut, refreshToken, clearForm, backendDomain } from "./module.js";
 
 // Call refresh token to renew the accesstoken if the user hasn't signed out yet
 refreshToken();
@@ -20,13 +11,11 @@ signOut();
 
 // Retrieve values from localstorage to fill some fileds in profile page
 const userInfo = JSON.parse(localStorage.getItem('user'));
-document.querySelector('#firstname').value = userInfo.firstname;
-document.querySelector('#lastname').value = userInfo.lastname;
-document.querySelector('#email').value = userInfo.email;
+document.querySelector("#firstname").value = userInfo.firstname;
+document.querySelector("#lastname").value = userInfo.lastname;
+document.querySelector("#email").value = userInfo.email;
 
-const passwordChangeForm = document.querySelector(
-  '#profile-change-password-form'
-);
+const passwordChangeForm = document.querySelector('#profile-change-password-form');
 
 // Dynamically clears any server messages
 clearForm(passwordChangeForm);
@@ -35,65 +24,51 @@ clearForm(passwordChangeForm);
 authenticationSubmit(passwordChangeForm, fetctChangePassword);
 
 // Adding functioanlity to show password feature
-const currentpasswordIcon = document.querySelector('#show-current-password');
-currentpasswordIcon.addEventListener('click', () => {
-  togglePasswordView(
-    'currentPassword',
-    currentpasswordIcon,
-    'show-current-password-text'
-  );
+const currentpasswordIcon = document.querySelector("#show-current-password");
+currentpasswordIcon.addEventListener("click", () => {
+    togglePasswordView("currentPassword", currentpasswordIcon, "show-current-password-text");
 });
-const newpasswordIcon = document.querySelector('#show-new-password');
-newpasswordIcon.addEventListener('click', () => {
-  togglePasswordView('newPassword', newpasswordIcon, 'show-new-password-text');
+const newpasswordIcon = document.querySelector("#show-new-password");
+newpasswordIcon.addEventListener("click", () => {
+    togglePasswordView("newPassword", newpasswordIcon, "show-new-password-text");
 });
 
-const newpasswordConfirmIcon = document.querySelector(
-  '#show-new-password-confirm'
-);
-newpasswordConfirmIcon.addEventListener('click', () => {
-  togglePasswordView(
-    'confirmationPassword',
-    newpasswordConfirmIcon,
-    'show-new-password-confirm-text'
-  );
+const newpasswordConfirmIcon = document.querySelector("#show-new-password-confirm");
+newpasswordConfirmIcon.addEventListener("click", () => {
+    togglePasswordView("confirmationPassword", newpasswordConfirmIcon, "show-new-password-confirm-text");
 });
+
 
 // Calling backend API for registration
 async function fetctChangePassword(passwordInfo) {
+  
   // renew refresh token if access token is expired and user hasn't signed out
   await refreshToken();
 
-  let apiUrl = 'http://localhost:8080/api/users/change-password';
+  let apiUrl = `${backendDomain}/api/users/change-password`;
   try {
     const response = await fetch(apiUrl, {
       method: 'PATCH',
       credentials: 'include',
       mode: 'cors',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': "application/json"
       },
-      body: JSON.stringify(passwordInfo),
+      body: JSON.stringify(passwordInfo)
     });
     // const data = await response.json();
-    if (!response.ok) {
-      displayServerErrorMessages(
-        'profile-change-password-form',
-        'Something went wrong'
-      );
-    } else {
-      displaySuccessMessages(
-        'profile-change-password-form',
-        'Your password has successfully changed'
-      );
-      document.querySelector('#currentPassword').value = '';
-      document.querySelector('#newPassword').value = '';
-      document.querySelector('#confirmationPassword').value = '';
+    if(!response.ok){
+      displayServerErrorMessages('profile-change-password-form', "Something went wrong");
+    } else{
+      displaySuccessMessages('profile-change-password-form', "Your password has successfully changed");
+      document.querySelector("#currentPassword").value = ""
+      document.querySelector("#newPassword").value = ""
+      document.querySelector("#confirmationPassword").value = ""
     }
+
   } catch (error) {
-    console.error(
-      'Error fetching JSON data (profile, changing password):',
-      error
-    );
+    console.error("Error fetching JSON data (profile, changing password):", error);
   }
 }
+
+

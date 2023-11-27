@@ -1,8 +1,8 @@
 # Use the official Nginx Alpine image as the base image
 FROM nginx:alpine
 
-# ARG FRONTEND_APP_VERSION
-# ENV FRONTEND_APP_VERSION=${FRONTEND_APP_VERSION}
+ARG FRONTEND_APP_VERSION
+ENV FRONTEND_APP_VERSION=${FRONTEND_APP_VERSION}
 
 # Set the working directory inside the container to /app
 WORKDIR /app

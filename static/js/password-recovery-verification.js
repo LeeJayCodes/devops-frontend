@@ -1,18 +1,12 @@
-import {
-  displayServerErrorMessages,
-  clearForm,
-  clearServerMessage,
-} from './module.js';
+import { displayServerErrorMessages, clearForm, clearServerMessage, backendDomain } from './module.js'
 
 const forgotPasswordCodeForm = document.querySelector('#recovery-code-form');
-const passwordRecoveryCodeError = document.querySelector(
-  '#password-recovery-code-error'
-);
+const passwordRecoveryCodeError = document.querySelector('#password-recovery-code-error');
 
 clearForm(forgotPasswordCodeForm);
 // generic form behavior for sign in, registration, password change (relevant to authentication)
 
-forgotPasswordCodeForm.addEventListener('submit', async function (e) {
+forgotPasswordCodeForm.addEventListener('submit', async function(e) { 
   clearServerMessage();
 
   // Prevent the form submission initially
@@ -36,38 +30,32 @@ forgotPasswordCodeForm.addEventListener('submit', async function (e) {
 
 // Calling backend API for sign in
 async function fetchValidatePasswordRecoveryCode(code) {
-  let apiUrl = `http://localhost:8080/api/auth/validate-password-code?code=${code}`;
-
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-      credentials: 'include',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      if (data.message.includes('Invalid')) {
-        displayServerErrorMessages(
-          'recovery-code-form',
-          'Invalid code, please check your code again.'
-        );
-        console.log(data);
-      } else {
-        displayServerErrorMessages(
-          'password-recovery-code-error',
-          'Your code might have expired, please try again by sending new recovery email.'
-        );
-        passwordRecoveryCodeError.classList.remove('hidden');
-        forgotPasswordCodeForm.classList.add('hidden');
+    let apiUrl = `${backendDomain}/api/auth/validate-password-code?code=${code}`;
+  
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'include',
+        mode: 'cors',
+        headers: {
+          'Content-Type': "application/json"
+        },
+      });
+      const data = await response.json();
+      if(!response.ok){
+        if(data.message.includes("Invalid")){
+          displayServerErrorMessages("recovery-code-form", "Invalid code, please check your code again.");
+          console.log(data);
+        } else {
+          displayServerErrorMessages("password-recovery-code-error", "Your code might have expired, please try again by sending new recovery email.");
+          passwordRecoveryCodeError.classList.remove("hidden");
+          forgotPasswordCodeForm.classList.add("hidden");
+        }
+        return false;
+      } else{
+        return true;
       }
-      return false;
-    } else {
-      return true;
+    } catch (error) {
+      console.error("Error fetching JSON data (password recovery):", error);
     }
-  } catch (error) {
-    console.error('Error fetching JSON data (password recovery):', error);
   }
-}
