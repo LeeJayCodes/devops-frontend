@@ -3,7 +3,7 @@ version: "3.9"
 services:
   front-end-app:
     container_name: front-end-app
-    image: front-end-app
+    image: front-end-app:${FRONTEND_VERSION:-latest}
     build:
       context: .
       dockerfile: Dockerfile

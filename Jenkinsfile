@@ -25,7 +25,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
 
-                sh """
+                bat """
                     docker login -u ${containerRegistryCredentials_USR} -p ${containerRegistryCredentials_PSW} ${containerRegistryURL}
                     docker-compose build --build-arg FRONTEND_VERSION=${env.version}
                     docker tag ${FRONTEND_IMAGE_NAME}:${env.version} ${ARTIFACTORY_URL}/${ARTIFACTORY_REPO}/${FRONTEND_IMAGE_NAME}:${env.version}
