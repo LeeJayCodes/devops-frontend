@@ -1,0 +1,31 @@
+# Use an image that includes Node.js and Selenium dependencies
+FROM node:14
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install live-server globally
+RUN npm install -g live-server
+
+# Install Chrome and other dependencies
+RUN apt-get update && \
+    apt-get install -y wget gnupg && \
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
+    apt-get update && \
+    apt-get install -y google-chrome-stable && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy the Selenium test files into the container
+COPY . .
+
+# Install dependencies
+RUN npm install
+
+RUN live-server --open=test/
+# Expose any necessary ports for Selenium, if applicable
+EXPOSE 4444
+
+# Command to run your Selenium tests
+CMD ["bash", "-c", "live-server --open=test/ && npm test"]

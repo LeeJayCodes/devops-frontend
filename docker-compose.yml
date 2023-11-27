@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  front-end-app:
+    container_name: front-end-app
+    image: front-end-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8090:8080"
+
+  # selenium-tests:
+  #   container_name: selenium-tests
+  #   image: frontend-selenium-image
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-selenium
+  #   depends_on:
+  #     - front-end-app
+  #   environment:
+  #     - SELENIUM_HOST=front-end-app
+  #     - SELENIUM_PORT=8080
