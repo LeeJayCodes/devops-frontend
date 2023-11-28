@@ -1,9 +1,9 @@
-version: "3.9"
+version: "3.6"
 
 services:
   front-end-app:
-    container_name: frontend-app
-    image: frontend-app:${FRONTEND_APP_VERSION:-latest}
+    container_name: devops-training-cert-tracker-fe
+    image: devops-training-cert-tracker-fe:${FRONTEND_APP_VERSION:-latest}
     build:
       context: .
       dockerfile: Dockerfile
