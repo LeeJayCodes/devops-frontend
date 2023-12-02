@@ -1,39 +1,41 @@
 version: "3.6"
 
 services:
-  cert-fe:
-    container_name: cert-fe
-    image: cert-fe:${FRONTEND_APP_VERSION:-latest}
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - "8090:8080"
-    environment:
-      - FRONTEND_APP_VERSION=${FRONTEND_APP_VERSION:-latest}  # Use the default value 'latest' if not provided 
-
-  # selenium-host:
-  #   container_name: selenium-host
-  #   image: selenium-host
+  # cert-fe:
+  #   container_name: cert-fe
+  #   image: cert-fe:${FRONTEND_APP_VERSION:-latest}
   #   build:
   #     context: .
-  #     dockerfile: Dockerfile-selenium-host
+  #     dockerfile: Dockerfile
+  #   restart: always
   #   ports:
-  #     - "3000:3000"
+  #     - "8090:8080"
+  #   environment:
+  #     - FRONTEND_APP_VERSION=${FRONTEND_APP_VERSION:-latest}  # Use the default value 'latest' if not provided 
 
-  # selenium-tests:
-  #   container_name: selenium-tests
-  #   image: selenium-tests
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-selenium
-  #   depends_on:
-  #     - selenium-host
-  selenium-testt:
-    container_name: selenium-testt
-    image: selenium-testt
+  selenium-host:
+    container_name: selenium-host
+    image: selenium-host
     build:
       context: .
-      dockerfile: Dockerfile-test
+      dockerfile: Dockerfile-selenium-host
+    ports:
+      - "3000:3000"
+
+  selenium-tests:
+    container_name: selenium-tests
+    image: selenium-tests
+    build:
+      context: .
+      dockerfile: Dockerfile-selenium
+    depends_on:
+      - selenium-host
+
+  # selenium-testt:
+  #   container_name: selenium-testt
+  #   image: selenium-testt
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-test
+
 

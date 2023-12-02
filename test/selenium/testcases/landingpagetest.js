@@ -1,10 +1,10 @@
 const landingpage = require('../pageobjects/landingpage');
 const expect = require('chai').expect
 
-describe('This tests for profile.html', function(){
+describe('This tests for landingpage.html', function(){
     beforeEach(async function() {
         // Enter actions performed before test
-        const baseUrl = 'http://selenium-host:3000/certificate-tracker.html';
+        const baseUrl = 'http://localhost:3000/certificate-tracker.html';
         landingpage.go_to_url(baseUrl);
         // Give browser time to load all the plug ins
         await driver.sleep(1000);

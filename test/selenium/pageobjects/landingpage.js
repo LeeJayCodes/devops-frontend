@@ -12,7 +12,7 @@ class LandingPage extends BasePage {
     async go_to_signin_test(){
         this.clickByXpath('//*[@id="wb-so"]/div/div/a');
 
-        await driver.sleep(500);
+        await driver.sleep(100);
         
         //get text from additional information
         const currentUrl = await driver.getCurrentUrl();
