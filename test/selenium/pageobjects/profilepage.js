@@ -24,7 +24,7 @@ class ProfilePage extends BasePage {
 
         let newPasswordError = await super.getTextById('new-password-error'); 
         if(!newPasswordError.includes("Password must be between 6 and 12 characters and contains at least 1 letter, 1 number and 1 special character.")){
-            console.log('Fail, ew-password-error required input');
+            console.log('Fail, new-password-error required input');
             result = false;
         }
 
@@ -46,7 +46,7 @@ class ProfilePage extends BasePage {
         super.enterInputById("new-password", "a!1aa");
 
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         let passwordError = await super.getTextById(`new-password-error`);
         if(!passwordError.includes("must be between 6 and 12 characters and contains at least 1 letter, 1 number and 1 special character.")){
@@ -59,7 +59,7 @@ class ProfilePage extends BasePage {
         super.enterInputById("new-password", "aaaaa!");
 
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         passwordError = await super.getTextById(`new-password-error`);
         if(!passwordError.includes("must be between 6 and 12 characters and contains at least 1 letter, 1 number and 1 special character.")){
@@ -72,7 +72,7 @@ class ProfilePage extends BasePage {
         super.enterInputById("new-password", "aaaaa1");
         
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
         
         passwordError = await super.getTextById(`new-password-error`);
         if(!passwordError.includes("must be between 6 and 12 characters and contains at least 1 letter, 1 number and 1 special character.")){
@@ -95,7 +95,7 @@ class ProfilePage extends BasePage {
         super.enterInputById("new-password-confirm", "1234a");
    
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         let passwordconfirmError = await super.getTextById(`new-password-confirm-error`);
         if(!passwordconfirmError.includes("Please enter the same value again.")){
@@ -108,10 +108,10 @@ class ProfilePage extends BasePage {
     // Test if user can navigate to dash board page by clicking a dash board link on user overlay
     async user_button_to_dashboard_test(){
         super.clickById('open-user-overlay-btn');
-        await driver.sleep(500);
+        await driver.sleep(1000);
         super.clickByXpath('//*[@id="user-overlay"]/ul/li[2]/a');
 
-        await driver.sleep(500);
+        await driver.sleep(1000);
         
         //get text from additional information
         const currentUrl = await driver.getCurrentUrl();

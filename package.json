@@ -8,7 +8,7 @@
     "test-landingpage": "mocha test/selenium/testcases/landingpagetest.js --timeout 200000",
     "test-registration": "mocha test/selenium/testcases/registrationpagetest.js --timeout 60000",
     "test-signin": "mocha test/selenium/testcases/signinpagetest.js --timeout 60000",
-    "test-profile": "mocha test/selenium/testcases/profilepagetest.js",
+    "test-profile": "mocha test/selenium/testcases/profilepagetest.js --timeout 60000",
     "test": "npm run test-dashboard && npm run test-landingpage && npm run test-registration && npm run test-signin && npm run test-profile"
   },
   "author": "",

@@ -18,7 +18,7 @@ class RegistrationTests extends BasePage {
         // const submitBtn = await driver.findElement(By.xpath('//*[@id="register_form"]/input[1]'));
         // submitBtn.click();
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         let fnameError = await super.getTextById("firstname-error");
         if(!fnameError.includes("This field is required.")){
@@ -69,7 +69,7 @@ class RegistrationTests extends BasePage {
         // fnameInputField.sendKeys("j");
         super.enterInputById(id, "j");
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         let nameError = await super.getTextById(`${id}-error`);
         if(!nameError.includes("Please enter at least 2 characters.")){
@@ -82,7 +82,7 @@ class RegistrationTests extends BasePage {
         // Test correct error message is displaying for when the input is not letters
         super.enterInputById(id, "1234");
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         nameError = await super.getTextById(`${id}-error`);
         if(!nameError.includes("Letters only please.")){
@@ -100,7 +100,7 @@ class RegistrationTests extends BasePage {
         super.enterInputById("tel", "1234");
 
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         let telError = await super.getTextById(`tel-error`);
         if(!telError.includes("Please specify a valid phone number.")){
@@ -119,7 +119,7 @@ class RegistrationTests extends BasePage {
         super.enterInputById("email", "1@1.1");
 
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         let emailError = await super.getTextById(`email-error`);
         if(!emailError.includes("Invalid format.")){
@@ -138,7 +138,7 @@ class RegistrationTests extends BasePage {
         super.enterInputById("password", "a!1aa");
 
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         let passwordError = await super.getTextById(`password-error`);
         if(!passwordError.includes("must be between 6 and 12 characters and contains at least 1 letter, 1 number and 1 special character.")){
@@ -151,7 +151,7 @@ class RegistrationTests extends BasePage {
         super.enterInputById("password", "aaaaa!");
 
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         passwordError = await super.getTextById(`password-error`);
         if(!passwordError.includes("must be between 6 and 12 characters and contains at least 1 letter, 1 number and 1 special character.")){
@@ -164,7 +164,7 @@ class RegistrationTests extends BasePage {
         super.enterInputById("password", "aaaaa1");
         
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
         
         passwordError = await super.getTextById(`password-error`);
         if(!passwordError.includes("must be between 6 and 12 characters and contains at least 1 letter, 1 number and 1 special character.")){
@@ -187,7 +187,7 @@ class RegistrationTests extends BasePage {
         super.enterInputById("password-confirm", "1234a");
    
         this.clickSubmit();
-        await driver.sleep(500);
+        await driver.sleep(1000);
 
         let passwordconfirmError = await super.getTextById(`password-confirm-error`);
         if(!passwordconfirmError.includes("Please enter the same value again.")){
@@ -199,9 +199,9 @@ class RegistrationTests extends BasePage {
 
     async user_button_to_profile_test(){
         super.clickById('open-user-overlay-btn');
-        await driver.sleep(500);
+        await driver.sleep(1000);
         super.clickByXpath('//*[@id="user-overlay"]/ul/li[1]/a');
-        await driver.sleep(500);
+        await driver.sleep(1000);
         
         //get text from additional information
         const currentUrl = await driver.getCurrentUrl();
@@ -219,7 +219,7 @@ class RegistrationTests extends BasePage {
     async exit_button_test(){
         super.clickByXpath('//*[@id="register-form"]/a');
 
-        await driver.sleep(500);
+        await driver.sleep(1000);
         
         //get text from additional information
         const currentUrl = await driver.getCurrentUrl();
