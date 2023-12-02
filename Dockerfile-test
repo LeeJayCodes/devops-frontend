@@ -1,0 +1,25 @@
+# Use an image that includes Node.js
+FROM node:18
+
+# Set the working directory inside the container
+WORKDIR /app/
+
+# Copy the application files into the container
+COPY . .
+
+# Install dependencies for both Selenium tests and Express.js server
+RUN apt-get update && \
+    apt-get install -y wget gnupg && \
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
+    apt-get update && \
+    apt-get install -y google-chrome-stable && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN npm install
+
+RUN npm install -g pm2
+
+# Run both processes using pm2
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]

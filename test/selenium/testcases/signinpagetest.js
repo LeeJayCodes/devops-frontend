@@ -1,10 +1,10 @@
 const signinpage = require('../pageobjects/signinpage');
 const expect = require('chai').expect
-
+    // "npm run test-dashboard && npm run test-landingpage && npm run test-registration && npm run test-signin && npm run test-profile"
 describe('This tests for signin.html', function(){
   beforeEach(async function() {
     // Enter actions performed before test
-    const baseUrl = 'http://127.0.0.1:8080/src/test/frontend/signin.html';
+    const baseUrl = 'http://localhost:3000/signin.html';
     signinpage.go_to_url(baseUrl);
     // Give browser time to load all the plug ins
     await driver.sleep(1000);

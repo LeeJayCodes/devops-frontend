@@ -58,27 +58,31 @@ export function getCookie(name) {
 
 // generic form behavior for sign in, registration, password change (relevant to authentication)
 export function authenticationSubmit(form, api){
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
         clearServerMessage()
+        
+        
 
         // Check the validity of the form with jQeury (which WET-boew utilizes for its form validation) to see if the form is ready to call the api
         if(!$(this).valid()){
             return ;
         } else {
-        // Convert form data into JSON data
-        const formData = new FormData(this);
-        if(formData.has('password-confirm')){
-          formData.delete('password-confirm');
-        }
-        
-        const formJsonData = {};
-        formData.forEach(function(key, value) {
-            formJsonData[value] = key;
-        });
-        api(formJsonData);
-            
+          const loadingImg = document.querySelector('.loadingImg');
+          loadingImg.classList.remove("hidden");
+          // Convert form data into JSON data
+          const formData = new FormData(this);
+          if(formData.has('password-confirm')){
+            formData.delete('password-confirm');
+          }
+
+          const formJsonData = {};
+          formData.forEach(function(key, value) {
+              formJsonData[value] = key;
+          });
+          await api(formJsonData);   
+          loadingImg.classList.add("hidden"); 
         }       
     });
 }

@@ -4,7 +4,7 @@ const expect = require('chai').expect
 describe('This tests for registration.html', function(){
     beforeEach(async function() {
         // Enter actions performed before test
-        const baseUrl = 'http://127.0.0.1:8080/src/test/frontend/registration.html';
+        const baseUrl = 'http://selenium-host:3000/registration.html';
         registrationpage.go_to_url(baseUrl);
         // Give browser time to load all the plug ins
         await driver.sleep(1000);

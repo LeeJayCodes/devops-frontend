@@ -17,11 +17,12 @@ forgotPasswordCodeForm.addEventListener('submit', async function(e) {
   if (!$(this).valid()) {
     return;
   }
-
+  const loadingImg = document.querySelector('.loadingImg');
+  loadingImg.classList.remove("hidden");
   const recoveryCode = this.code.value;
 
   let codeValidation = await fetchValidatePasswordRecoveryCode(recoveryCode);
-
+  loadingImg.classList.add("hidden");
   // If codeValidation is true, manually submit the form
   if (codeValidation) {
     this.submit();

@@ -1,13 +1,44 @@
-# Use an image that includes Node.js and Selenium dependencies
-FROM node:14
+# # Use an image that includes Node.js and Selenium dependencies
+# FROM node:18
 
-# Set the working directory inside the container
-WORKDIR /app
+# # Set the working directory inside the container
+# WORKDIR /selenium-test/
 
-# Install live-server globally
-RUN npm install -g live-server
+# # Install Chrome and other dependencies
+# RUN apt-get update && \
+#     apt-get install -y wget gnupg && \
+#     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+#     echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
+#     apt-get update && \
+#     apt-get install -y google-chrome-stable && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/* && \
+#     google-chrome-stable --version
 
-# Install Chrome and other dependencies
+# # Install ChromeDriver
+# RUN wget -O /selenium-test/chromedriver.zip https://chromedriver.storage.googleapis.com/$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip && \
+#     unzip /selenium-test/chromedriver.zip -d /selenium-test/ && \
+#     rm /selenium-test/chromedriver.zip && \
+#     chmod +x /selenium-test/chromedriver && \
+#     mv /selenium-test/chromedriver /usr/local/bin/
+
+# # Copy the Selenium test files into the container
+# COPY . .
+
+# # Install dependencies
+# RUN npm install
+
+
+# # Command to run your Selenium tests
+# CMD ["npm", "test"]
+
+# 1) Use alpine-based NodeJS base image
+FROM node:latest
+
+WORKDIR /selenium-test/
+# Copy script to execute to working directory
+COPY . .
+
 RUN apt-get update && \
     apt-get install -y wget gnupg && \
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
@@ -17,15 +48,28 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy the Selenium test files into the container
-COPY . .
 
-# Install dependencies
 RUN npm install
 
-RUN live-server --open=test/
-# Expose any necessary ports for Selenium, if applicable
-EXPOSE 4444
 
-# Command to run your Selenium tests
-CMD ["bash", "-c", "live-server --open=test/ && npm test"]
+EXPOSE 8080
+
+# 7) Execute the script in NodeJS
+CMD ["npm", "test"]
+
+
+
+# # 2) Install latest stable Chrome
+# # https://gerg.dev/2021/06/making-chromedriver-and-chrome-versions-match-in-a-docker-image/
+# RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | \
+#     tee -a /etc/apt/sources.list.d/google.list && \
+#     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | \
+#     apt-key add - && \
+#     apt-get update && \
+#     apt-get install -y google-chrome-stable libxss1
+
+# # 3) Install the Chromedriver version that corresponds to the installed major Chrome version
+# # https://blogs.sap.com/2020/12/01/ui5-testing-how-to-handle-chromedriver-update-in-docker-image/
+# RUN google-chrome --version | grep -oE "[0-9]{1,10}.[0-9]{1,10}.[0-9]{1,10}" > /tmp/chromebrowser-main-version.txt
+# RUN wget --no-verbose -O /tmp/latest_chromedriver_version.txt https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$(cat /tmp/chromebrowser-main-version.txt | cut -d '.' -f 1,2)
+# Install Chrome and other dependencies

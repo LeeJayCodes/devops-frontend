@@ -37,13 +37,14 @@ class HomePageTests extends BasePage {
     // Test if user can navigate to profile page by clicking a profile link on user overlay
     async user_button_to_profile_test(){
         super.clickById('open-user-overlay-btn');
-        await driver.sleep(500);
+        await driver.sleep(1000);
         super.clickByXpath('//*[@id="user-overlay"]/ul/li[1]/a');
 
-        await driver.sleep(500);
+        await driver.sleep(1000);
         
         //get text from additional information
         const currentUrl = await driver.getCurrentUrl();
+        console.log(currentUrl);
 
         if (currentUrl.includes("profile.html")){
             console.log("Success, you are redirected to profile page")

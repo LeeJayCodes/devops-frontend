@@ -3,7 +3,8 @@ const webdriver = require('selenium-webdriver');
 
 const chrome = require('selenium-webdriver/chrome');
 const chromeOptions = new chrome.Options()
-.addArguments('--headless');
+.addArguments('--headless')
+.addArguments(['--no-sandbox']);
 
 const driver = new webdriver.Builder()
   .forBrowser('chrome')

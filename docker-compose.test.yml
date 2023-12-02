@@ -1,0 +1,9 @@
+version: "3.6"
+
+services:
+  selenium-testt:
+    container_name: selenium-testt
+    image: selenium-testt
+    build:
+      context: .
+      dockerfile: Dockerfile-test

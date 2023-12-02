@@ -4,7 +4,7 @@ const expect = require('chai').expect
 describe('This tests for index.html', function(){
     beforeEach(async function() {
         // Enter actions performed before test
-        const baseUrl = 'http://127.0.0.1:8080/src/test/frontend/';
+        const baseUrl = 'http://localhost:3000';
         homepage.go_to_url(baseUrl);
         await driver.sleep(1000);
     });

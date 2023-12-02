@@ -1,9 +1,9 @@
 version: "3.6"
 
 services:
-  front-end-app:
-    container_name: devops-training-cert-tracker-fe
-    image: devops-training-cert-tracker-fe:${FRONTEND_APP_VERSION:-latest}
+  cert-fe:
+    container_name: cert-fe
+    image: cert-fe:${FRONTEND_APP_VERSION:-latest}
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,15 +13,27 @@ services:
     environment:
       - FRONTEND_APP_VERSION=${FRONTEND_APP_VERSION:-latest}  # Use the default value 'latest' if not provided 
 
+  # selenium-host:
+  #   container_name: selenium-host
+  #   image: selenium-host
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-selenium-host
+  #   ports:
+  #     - "3000:3000"
 
   # selenium-tests:
   #   container_name: selenium-tests
-  #   image: frontend-selenium-image
+  #   image: selenium-tests
   #   build:
   #     context: .
   #     dockerfile: Dockerfile-selenium
   #   depends_on:
-  #     - front-end-app
-  #   environment:
-  #     - SELENIUM_HOST=front-end-app
-  #     - SELENIUM_PORT=8080
+  #     - selenium-host
+  selenium-testt:
+    container_name: selenium-testt
+    image: selenium-testt
+    build:
+      context: .
+      dockerfile: Dockerfile-test
+

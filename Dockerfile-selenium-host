@@ -1,0 +1,17 @@
+# Use an image that includes Node.js
+FROM node:18
+
+# Set the working directory inside the container
+WORKDIR /selenium-host/
+
+# Copy the server files into the container
+COPY . .
+
+# Install dependencies
+RUN npm install express
+
+# Expose the port on which Express.js will run
+EXPOSE 3000
+
+# Command to start the Express.js server
+CMD ["node", "test-server.js"]
